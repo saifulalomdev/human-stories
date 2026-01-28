@@ -1,4 +1,4 @@
-import { createSelectSchema, createInsertSchema } from 'drizzle-zod';
+import { createSelectSchema } from 'drizzle-zod';
 import { z } from 'zod';
 import { users } from '../schema/users';
 
@@ -8,9 +8,10 @@ const MIN_PWD_LEN = 10;
 
 // --- Base Schemas (The Foundation) ---
 export const userBaseSchema = createSelectSchema(users, {
-    name: (s) => s.min(MIN_NAME_LEN, `Name must be at least ${MIN_NAME_LEN} characters`),
-    password: (s) => s.min(MIN_PWD_LEN, `Password must be at least ${MIN_PWD_LEN} characters`),
-    email: z.email(),
+    // Cast 's' or use z.string().min() to override
+    name: z.string().min(MIN_NAME_LEN, `Name must be at least ${MIN_NAME_LEN} characters`),
+    password: z.string().min(MIN_PWD_LEN, `Password must be at least ${MIN_PWD_LEN} characters`),
+    email: z.string().email("Invalid email address"),
 });
 
 // --- Logic-Specific Schemas ---
@@ -56,7 +57,7 @@ export type UserPublic = z.infer<typeof userPublicSchema>;
 // Shared Wrapper Types
 export type Prettify<T> = { [K in keyof T]: T[K] } & {};
 
-export type LogInResponse = Prettify<{
+export type LogInResponseBody = Prettify<{
     tokens: {
         accessToken: string;
         refreshToken: string;

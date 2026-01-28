@@ -5,7 +5,7 @@ import {
     updateUserById,
     UserLogin,
     UserPublic,
-    LogInResponse
+    LogInResponseBody
 } from '@repo/db';
 import { AppError } from '@/core';
 import { generateTokens, hashPassword, verifyPassword } from './auth.utils';
@@ -47,7 +47,7 @@ export async function signUp(data: UserRegistration) {
 }
 
 
-export async function signIn(data: UserLogin): Promise<LogInResponse> {
+export async function signIn(data: UserLogin): Promise<LogInResponseBody> {
     const { email, password } = data;
 
     // 1. Check for existing user
@@ -81,7 +81,7 @@ export async function signIn(data: UserLogin): Promise<LogInResponse> {
     const tokens = generateTokens(publicUser);
 
     // 6. prepare client data.
-    const authCredentials: LogInResponse= {
+    const authCredentials: LogInResponseBody= {
         tokens,
         user: publicUser
     };
