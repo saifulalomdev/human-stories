@@ -33,9 +33,16 @@ We believe that:
 
 Before HumanStories, I built **BazarBhai**, a multi-vendor startup. While the business logic was sound, the technical execution taught me a hard lesson. I managed four disconnected repositories:
 
+* 🌐 **[BazarBhai Client](https://gitlab.com/bazarbhai/bazarbhai-client.git)** — Consumer Marketplace
+* 🛠️ **[BazarBhai Admin](https://gitlab.com/bazarbhai/bazarbhai-admin.git)** — Management & Analytics
+* 📦 **[BazarBhai Seller](https://gitlab.com/bazarbhai/bazarbhai-seller.git)** — Vendor Inventory Suite
+* ⚙️ **[BazarBhai Backend](https://gitlab.com/bazarbhai/bazarbhai-backend.git)** — Central REST API
+
+### The Technical Fallout:
+
 * **The Issue:** A change in the Backend schema would silently break the Mobile app.
 * **The Result:** "Type-Drift"—hours wasted on manual synchronization and debugging production crashes.
-* **The Realization:** To build a platform for humanity, the infrastructure must be **physically incapable of being out of sync.**
+* **The Realization:** To build a platform for humanity, the infrastructure must be **physically incapable of being out of sync.** This is why HumanStories was built as a unified Monorepo.
 
 ---
 
