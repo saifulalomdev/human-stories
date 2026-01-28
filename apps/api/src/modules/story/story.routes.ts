@@ -1,13 +1,43 @@
-import { validateResource } from '@/infrastructure/http/middlewares';
 import { Router, IRouter } from 'express';
-import { storiesCreateSchema, storiesUpdateSchema } from '@repo/db'
 import { requireAuth } from '@/infrastructure/http/middlewares';
-import { createNewStory } from './story.controller';
+import {
+    createNewStory,
+    updateStory,
+    deleteStory,
+    getStoriesFeed,
+    getStoryDetails
+} from './story.controller';
+import {
+    idParams,
+    storiesCreateSchema,
+    storiesUpdateSchema
+} from '@repo/db';
+import { validateResource } from '@/infrastructure/http/middlewares';
 
-const routes: IRouter = Router()
+const routes: IRouter = Router();
 
-// routes.get("/");
+/**
+ * PUBLIC ROUTES
+ */
 
+// GET /stories - Fetch paginated feed
+routes.get(
+    "/",
+    getStoriesFeed
+);
+
+// GET /stories/:id - Fetch single story details
+routes.get(
+    "/:id",
+    validateResource(idParams, "params"),
+    getStoryDetails
+);
+
+/**
+ * PROTECTED ROUTES
+ */
+
+// POST /stories - Create a new story
 routes.post(
     "/",
     requireAuth(),
@@ -15,10 +45,21 @@ routes.post(
     createNewStory
 );
 
-// routes.put(
-//     "/",
-//     requireAuth(),
-//     validateResource(storiesUpdateSchema),
-// )
+// PUT /stories/:id - Update own story
+routes.put(
+    "/:id",
+    requireAuth(),
+    validateResource(idParams, "params"),
+    validateResource(storiesUpdateSchema),
+    updateStory
+);
 
-export default routes
+// DELETE /stories/:id - Remove own story
+routes.delete(
+    "/:id",
+    requireAuth(),
+    validateResource(idParams, "params"), // Added for safety
+    deleteStory
+);
+
+export default routes;
