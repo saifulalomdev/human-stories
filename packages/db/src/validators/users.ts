@@ -43,6 +43,7 @@ export const userPublicSchema = userBaseSchema.omit({
     password: true,
     isVerified: true,
     updatedAt: true,
+    createdAt: true
 });
 
 // --- Types ---
@@ -55,7 +56,7 @@ export type UserPublic = z.infer<typeof userPublicSchema>;
 // Shared Wrapper Types
 export type Prettify<T> = { [K in keyof T]: T[K] } & {};
 
-export type AuthResponse = Prettify<{
+export type LogInResponse = Prettify<{
     tokens: {
         accessToken: string;
         refreshToken: string;

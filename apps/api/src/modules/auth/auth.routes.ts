@@ -1,6 +1,6 @@
 import { validateResource } from '@/infrastructure/http/middlewares';
 import { Router, IRouter } from 'express';
-import { insertUserSchema, loginUserSchema } from '@repo/db'
+import { userLoginSchema, userRegistrationSchema } from '@repo/db'
 import { loginUser, registerUser } from './auth.controller';
 import { requireAuth } from '@/infrastructure/http/middlewares';
 
@@ -14,13 +14,13 @@ routes.get(
 
 routes.post(
     "/register",
-    validateResource(insertUserSchema),
+    validateResource(userRegistrationSchema),
     registerUser
 )
 
 routes.post(
     "/login", 
-    validateResource(loginUserSchema),
+    validateResource(userLoginSchema),
     loginUser
 )
 

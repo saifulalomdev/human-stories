@@ -1,8 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import {
-    AuthData,
-    LoginUser,
-    type InsertUser
+    UserRegistration,
+    type UserLogin,
 } from '@repo/db';
 import { sendResponse } from '@/core';
 import { signIn, signUp } from './auth.service';
@@ -12,7 +11,7 @@ import { signIn, signUp } from './auth.service';
  * Path: POST /auth/register
  */
 export async function registerUser(
-    req: Request<object, object, InsertUser>,
+    req: Request<object, object, UserRegistration>,
     res: Response,
     next: NextFunction
 ) {
@@ -29,7 +28,7 @@ export async function registerUser(
  * Path: POST /auth/login
  */
 export async function loginUser(
-    req: Request<object, object, LoginUser>,
+    req: Request<object, object, UserLogin>,
     res: Response,
     next: NextFunction
 ) {

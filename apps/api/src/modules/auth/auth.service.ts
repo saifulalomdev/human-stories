@@ -1,11 +1,11 @@
 import {
     findUserByEmail,
     createUser,
-    type InsertUser,
+    type UserRegistration,
     updateUserById,
-    LoginUser,
-    AuthData,
-    AuthUser
+    UserLogin,
+    UserPublic,
+    LogInResponse
 } from '@repo/db';
 import { AppError } from '@/core';
 import { generateTokens, hashPassword, verifyPassword } from './auth.utils';
@@ -14,7 +14,7 @@ import { generateTokens, hashPassword, verifyPassword } from './auth.utils';
  * Service to handle new user registration.
  * Path: POST /auth/register
  */
-export async function signUp(data: InsertUser) {
+export async function signUp(data: UserRegistration) {
     const { email, password, name } = data;
 
     // 1. Check for existing user
@@ -47,7 +47,7 @@ export async function signUp(data: InsertUser) {
 }
 
 
-export async function signIn(data: LoginUser): Promise<AuthData> {
+export async function signIn(data: UserLogin): Promise<LogInResponse> {
     const { email, password } = data;
 
     // 1. Check for existing user
@@ -71,20 +71,19 @@ export async function signIn(data: LoginUser): Promise<AuthData> {
     }
 
     // 4. Auth user
-    const authUser: AuthUser = {
+    const publicUser: UserPublic = {
         id: existingUser.id,
         name: existingUser.name,
         email: existingUser.email,
-        role: existingUser.role,
     };
 
     // 5. genarate accesstoken and refreshtoken
-    const token = generateTokens(authUser);
+    const tokens = generateTokens(publicUser);
 
     // 6. prepare client data.
-    const authCredentials: AuthData = {
-        token,
-        user: authUser
+    const authCredentials: LogInResponse= {
+        tokens,
+        user: publicUser
     };
 
     return authCredentials;
