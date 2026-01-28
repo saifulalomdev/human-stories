@@ -2,6 +2,7 @@
   "compilerOptions": {
     "module": "ESNext",
     "moduleResolution": "bundler",
+    "strict": true,
     "paths": {
       "@/*": ["./src/*"],
       "@repo/db": ["../../packages/db/src/index.ts"], 

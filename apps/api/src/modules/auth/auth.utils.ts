@@ -1,31 +1,41 @@
+// apps/api/src/modules/auth/auth.utils.ts
 import { env } from '@repo/config/env/server'
 import bcrypt from 'bcrypt';
-import JWT from 'jsonwebtoken';
+import JWT, { SignOptions } from 'jsonwebtoken'; // Import SignOptions
 import { UserPublic } from '@repo/db'
 
 const SALT_ROUND = 10;
-const ACCESS_TOKEN_SECRET = env.JWT_ACCESS_SECRET;
+const ACCESS_TOKEN_SECRET = env.JWT_ACCESS_SECRET; 
 const REFRESH_TOKEN_SECRET = env.JWT_REFRESH_SECRET;
-const ACCESS_TOKEN_EXIRES_IN = env.JWT_ACCESS_SECRET_EXIRES_IN || "10m"; // Short life for security
-const REFRESH_TOKEN_EXIRES_IN = env.JWT_REFRESH_SECRET_EXIRES_IN || "15d";
+
+// Ensure these are cast to the specific type JWT expects
+const ACCESS_TOKEN_EXIRES_IN = (env.JWT_ACCESS_SECRET_EXIRES_IN || "10m") as SignOptions['expiresIn'];
+const REFRESH_TOKEN_EXIRES_IN = (env.JWT_REFRESH_SECRET_EXIRES_IN || "15d") as SignOptions['expiresIn'];
 
 export type DecodedPayload = UserPublic & { iat: number; exp: number };
 
 export async function hashPassword(password: string): Promise<string> {
     return bcrypt.hash(password, SALT_ROUND);
-};
+}
 
 export async function verifyPassword(password: string, hash: string): Promise<boolean> {
     return bcrypt.compare(password, hash);
-};
+}
 
-// Access and Refresh token genarator
 export const generateTokens = (payload: UserPublic) => {
-    const accessToken = JWT.sign(payload, ACCESS_TOKEN_SECRET, {
+    // 1. Create a plain object. JWT.sign fails if the payload 
+    // is a class instance or has hidden Zod properties.
+    const jwtPayload = {
+        id: payload.id,
+        email: payload.email,
+        name: payload.name,
+    };
+
+    const accessToken = JWT.sign(jwtPayload, ACCESS_TOKEN_SECRET, {
         expiresIn: ACCESS_TOKEN_EXIRES_IN, 
     });
 
-    const refreshToken = JWT.sign(payload, REFRESH_TOKEN_SECRET, {
+    const refreshToken = JWT.sign(jwtPayload, REFRESH_TOKEN_SECRET, {
         expiresIn: REFRESH_TOKEN_EXIRES_IN,
     });
 
