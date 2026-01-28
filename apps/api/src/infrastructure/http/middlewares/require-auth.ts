@@ -1,6 +1,6 @@
 import { AppError } from "@/core";
-import { DecodedPayload, verifyAccessToken } from "@/modules/auth/auth.utils";
-import { Request, Response, NextFunction } from 'express';
+import { verifyAccessToken } from "@/modules/auth/auth.utils";
+import { Response, NextFunction } from 'express';
 
 export function requireAuth() {
     return (req: any, _res: Response, next: NextFunction) => {
@@ -18,7 +18,7 @@ export function requireAuth() {
             }
 
             const decodedData = verifyAccessToken(token);
-            
+
             // --- The Critical Null Check ---
             if (!decodedData) {
                 throw new AppError("Session expired or invalid. Please sign in again.", 401);

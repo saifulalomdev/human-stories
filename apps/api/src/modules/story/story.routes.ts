@@ -1,8 +1,8 @@
-import { validateResource } from '@/infrastructure/http/middlewares';
 import { Router, IRouter } from 'express';
-import { storiesCreateSchema, storiesUpdateSchema } from '@repo/db'
 import { requireAuth } from '@/infrastructure/http/middlewares';
-import { createNewStory } from './story.controller';
+import { createNewStory, updateStory , deleteStory } from './story.controller';
+import { idParams, storiesCreateSchema, storiesUpdateSchema } from '@repo/db'
+import { validateResource } from '@/infrastructure/http/middlewares';
 
 const routes: IRouter = Router()
 
@@ -15,10 +15,18 @@ routes.post(
     createNewStory
 );
 
-// routes.put(
-//     "/",
-//     requireAuth(),
-//     validateResource(storiesUpdateSchema),
-// )
+routes.put(
+    "/:id",
+    requireAuth(),
+    validateResource(idParams , "params"),
+    validateResource(storiesUpdateSchema),
+    updateStory
+)
+
+routes.delete(
+    "/:id",
+    requireAuth(),
+    deleteStory
+)
 
 export default routes
