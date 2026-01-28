@@ -1,65 +1,64 @@
-// packages/db/src/validators/users.ts
-
-import {
-    createSelectSchema
-} from 'drizzle-zod';
+import { createSelectSchema, createInsertSchema } from 'drizzle-zod';
 import { z } from 'zod';
 import { users } from '../schema/users';
-import { roleEnum } from '../schema/enums';
 
-const NAME_LENGTH = 3
-const PASSWORD_LENGTH = 10;
+// --- Constants ---
+const MIN_NAME_LEN = 3;
+const MIN_PWD_LEN = 10;
 
-const roleSchema = createSelectSchema(roleEnum);
-
-export const selectUserSchema = createSelectSchema(users, {
-    name: (schema) => schema.min(NAME_LENGTH, `Name must be at least ${NAME_LENGTH} letter`),
-    password: (schema) => schema.min(PASSWORD_LENGTH, `Password must be at least ${PASSWORD_LENGTH} letter`),
-    email: () => z.email(),
-    role: roleSchema
+// --- Base Schemas (The Foundation) ---
+export const userBaseSchema = createSelectSchema(users, {
+    name: (s) => s.min(MIN_NAME_LEN, `Name must be at least ${MIN_NAME_LEN} characters`),
+    password: (s) => s.min(MIN_PWD_LEN, `Password must be at least ${MIN_PWD_LEN} characters`),
+    email: (s) => s.email(),
 });
 
-export const userProfileSchema = selectUserSchema.omit({
-    createdAt: true,
-    updatedAt: true,
-    id: true,
-});
+// --- Logic-Specific Schemas ---
 
-export const authUserSchema = selectUserSchema.pick({
-    id: true,
+// Used for Registration
+export const userRegistrationSchema = userBaseSchema.pick({
     name: true,
     email: true,
-    role: true,
+    password: true,
 });
 
-export const insertUserSchema = userProfileSchema
-    .omit({ role: true, isVerified: true });
+// Used for Login
+export const userLoginSchema = userBaseSchema.pick({
+    email: true,
+    password: true,
+});
 
-export const loginUserSchema = insertUserSchema
-    .omit({ name: true });
+// Used for Patching/Updating profile
+export const userUpdateSchema = userBaseSchema.pick({
+    name: true,
+    email: true,
+    password: true,
+    isVerified: true
+}).partial();
 
-export const updateUserSchema = userProfileSchema
-    .partial();
+// --- DTOs (Data Transfer Objects) ---
 
-export type User = z.infer<typeof selectUserSchema>;
+// What the client sees (Public Profile)
+export const userPublicSchema = userBaseSchema.omit({
+    password: true,
+    isVerified: true,
+    updatedAt: true,
+});
 
-export type InsertUser = z.infer<typeof insertUserSchema>;
+// --- Types ---
+export type User = z.infer<typeof userBaseSchema>;
+export type UserRegistration = z.infer<typeof userRegistrationSchema>;
+export type UserLogin = z.infer<typeof userLoginSchema>;
+export type UserUpdate = z.infer<typeof userUpdateSchema>;
+export type UserPublic = z.infer<typeof userPublicSchema>;
 
-export type LoginUser = z.infer<typeof loginUserSchema>;
+// Shared Wrapper Types
+export type Prettify<T> = { [K in keyof T]: T[K] } & {};
 
-export type UpdateUser = z.infer<typeof updateUserSchema>;
-
-export type AuthUser = z.infer<typeof authUserSchema>;
-
-
-export type Prettify<T> = {
-    [K in keyof T]: T[K];
-} & {};
-
-export type AuthData = Prettify<{
-    token: {
+export type AuthResponse = Prettify<{
+    tokens: {
         accessToken: string;
         refreshToken: string;
     },
-    user: AuthUser;
+    user: UserPublic;
 }>;

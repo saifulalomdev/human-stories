@@ -3,9 +3,9 @@
 import { eq } from "drizzle-orm";
 import { db } from "../db";
 import { users } from "../schema/users";
-import { InsertUser, UpdateUser } from "../validators/users";
+import { UserRegistration, UserUpdate } from "../validators/users";
 
-export async function createUser(input: InsertUser) {
+export async function createUser(input: UserRegistration) {
     const [user] = await db
         .insert(users)
         .values(input)
@@ -24,7 +24,7 @@ export async function findUserByEmail(email: string) {
     return user
 }
 
-export async function updateUserById(userId: string, data: UpdateUser) {
+export async function updateUserById(userId: string, data: UserUpdate) {
     const [updatedUser] = await db
         .update(users)
         .set(data)               
