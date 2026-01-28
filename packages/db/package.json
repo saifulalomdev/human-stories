@@ -1,0 +1,26 @@
+{
+    "name": "@repo/db",
+    "version": "1.0.0",
+    "main": "./src/index.js",
+    "types": "./src/index.ts",
+    "scripts": {
+        "build": "bun build src/index.ts --outfile ./dist/index.js --target node --minify --sourceMap",
+        "db:dev": "bun --watch ./src/index.ts",
+        "db:push": "drizzle-kit push",
+        "db:migrate": "drizzle-kit migrate"
+    },
+    "dependencies": {
+        "@repo/config": "workspace:*",
+        "drizzle-orm": "^0.45.1",
+        "drizzle-zod": "^0.8.3",
+        "pg": "^8.17.1",
+        "zod": "^4.3.5"
+    },
+    "devDependencies": {
+        "@types/pg": "^8.16.0",
+        "drizzle-kit": "^0.31.8",
+        "tsc": "^2.0.4",
+        "tsup": "^8.5.1",
+        "typescript": "^5.9.3"
+    }
+}

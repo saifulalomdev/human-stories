@@ -1,0 +1,12 @@
+{
+    "name": "@repo/config",
+    "main": "src/index.ts",
+    "exports": {
+        "./env/server": "./src/server.ts",
+        "./env/client": "./src/client.ts"
+    },
+    "dependencies": {
+        "dotenv": "^17.2.3",
+        "zod": "^4.3.5"
+    }
+}
