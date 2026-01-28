@@ -7,4 +7,6 @@ export * from "./validators/users"
 // stories
 export * from "./schema/reactions"
 export * from "./schema/stories"
+export * from "./validators/stories"
+export * from "./services/stories"
 

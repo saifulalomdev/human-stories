@@ -1,8 +1,9 @@
 import { AppError } from "@/core";
+import { DecodedPayload, verifyAccessToken } from "@/modules/auth/auth.utils";
 import { Request, Response, NextFunction } from 'express';
 
 export function requireAuth() {
-    return (req: Request, _res: Response, next: NextFunction) => {
+    return (req: any, _res: Response, next: NextFunction) => {
         try {
             const authHeader = req.headers.authorization;
 
@@ -16,11 +17,17 @@ export function requireAuth() {
                 throw new AppError("Invalid authorization format", 401);
             }
 
-            // const decodedData = verifyAccessToken(token);
-            // req.user = decodedData;
+            const decodedData = verifyAccessToken(token);
+            
+            // --- The Critical Null Check ---
+            if (!decodedData) {
+                throw new AppError("Session expired or invalid. Please sign in again.", 401);
+            }
+
+            req.user = decodedData;
 
             next()
-        } catch (error) {
+        } catch (error: any) {
             if (error.name === "JsonWebTokenError") {
                 throw new AppError("Invalid token. Please sign in again.", 401);
             }
