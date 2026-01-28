@@ -10,7 +10,7 @@ const MIN_PWD_LEN = 10;
 export const userBaseSchema = createSelectSchema(users, {
     name: (s) => s.min(MIN_NAME_LEN, `Name must be at least ${MIN_NAME_LEN} characters`),
     password: (s) => s.min(MIN_PWD_LEN, `Password must be at least ${MIN_PWD_LEN} characters`),
-    email: (s) => s.email(),
+    email: z.email(),
 });
 
 // --- Logic-Specific Schemas ---
