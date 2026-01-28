@@ -8,13 +8,13 @@
 
 ## 📑 Table of Contents
 
-1. [The "Why": Mission & Humanity](https://www.google.com/search?q=%23-the-why-mission--humanity)
-2. [The Problem: The BazarBhai Lessons](https://www.google.com/search?q=%23-the-problem-the-bazarbhai-lessons)
-3. [The Solution: Unified Architecture](https://www.google.com/search?q=%23-the-solution-unified-architecture)
-4. [Technical Stack](https://www.google.com/search?q=%23-technical-stack)
-5. [System Design](https://www.google.com/search?q=%23-system-design)
-6. [Installation & Setup](https://www.google.com/search?q=%23-installation--setup)
-7. [Roadmap & Future](https://www.google.com/search?q=%23-roadmap--future)
+1. [The "Why": Mission & Humanity](#-the-why-mission--humanity)
+2. [The Problem: The BazarBhai Lessons](#️-the-problem-the-bazarbhai-lessons)
+3. [The Solution: Unified Architecture](#-the-solution-unified-architecture)
+4. [Technical Stack](#-technical-stack)
+5. [System Design](#-system-design)
+6. [Installation & Setup](#️-installation--setup)
+7. [Roadmap & Future](#-roadmap--future)
 
 ---
 
