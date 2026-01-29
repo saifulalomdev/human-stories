@@ -40,7 +40,7 @@ export default function Editor() {
         {/* Title Input: Massive and Serif */}
         <TextInput
           style={styles.titleInput}
-          placeholder="A Title for this Chapter..."
+          placeholder="A Title ..."
           placeholderTextColor={Theme.colors.inkSubtle}
           multiline
           scrollEnabled={false}

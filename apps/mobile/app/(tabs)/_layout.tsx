@@ -9,7 +9,7 @@ import Navbar from '@/components/layout/nav-bar';
 export default function TabLayout() {
   return (
    <>
-      <Navbar /> {/* <--- Place it here, above the Tabs */}
+      <Navbar />
       <Tabs 
         tabBar={(props) => <CustomTabs {...props} />} 
         screenOptions={{ headerShown: false }} 

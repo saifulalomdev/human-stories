@@ -130,7 +130,7 @@ export default function HomeScreen() {
                   
                   <TouchableOpacity style={styles.reportBtn}>
                     <Ionicons name="alert-circle-outline" size={14} color={Theme.colors.inkSubtle} />
-                    <Text style={styles.reportText}>REPORT AI</Text>
+                    <Text style={styles.reportText}>REPORT</Text>
                   </TouchableOpacity>
                 </View>
               </View>
