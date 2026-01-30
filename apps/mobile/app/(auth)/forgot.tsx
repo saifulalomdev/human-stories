@@ -1,84 +1,61 @@
 import React, { useState } from 'react';
-import { 
-  View, 
-  Text, 
-  StyleSheet, 
-  TextInput, 
-  TouchableOpacity, 
-  KeyboardAvoidingView, 
-  Platform 
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  KeyboardAvoidingView,
+  Platform
 } from 'react-native';
 import { Theme } from '@/constants/theme';
 import { Ionicons } from '@expo/vector-icons';
+import Header from '@/components/ui/header';
+import Label from '@/components/ui/label';
+import Title from '@/components/ui/title';
+import Subtitle from '@/components/ui/subtitle';
+import BrandFooter from '@/components/ui/brand-footer';
+import Button from '@/components/ui/button';
+import Input from '@/components/ui/input';
+import Form from '@/components/ui/form';
+import KeyboardWrapper from '@/components/ui/keyboard-wrapper';
+import Divider from '@/components/ui/divider';
 
 export default function ForgotPassword() {
   const [email, setEmail] = useState('');
   const [isSent, setIsSent] = useState(false);
 
   return (
-    <KeyboardAvoidingView 
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'} 
-      style={styles.container}
-    >
-      <View style={styles.content}>
-        
-        {/* Back Button for Navigation */}
-        <TouchableOpacity style={styles.backButton}>
-          <Ionicons name="arrow-back" size={20} color={Theme.colors.ink} />
-          <Text style={styles.backText}>RETURN</Text>
-        </TouchableOpacity>
+    <KeyboardWrapper>
 
-        <View style={styles.header}>
-          <Text style={styles.label}>Account Recovery</Text>
-          <Text style={styles.title}>Lost the Key?</Text>
-          <Text style={styles.subtitle}>
-            Enter the email associated with your pen name. We will send a 
-            unique recovery link to your inbox.
-          </Text>
-        </View>
+      {/* Back Button for Navigation */}
+      <TouchableOpacity style={styles.backButton}>
+        <Ionicons name="arrow-back" size={20} color={Theme.colors.ink} />
+        <Text style={styles.backText}>RETURN</Text>
+      </TouchableOpacity>
 
-        {!isSent ? (
-          <View style={styles.form}>
-            <View style={styles.inputGroup}>
-              <Text style={styles.inputLabel}>RECOVERY EMAIL</Text>
-              <TextInput 
-                style={styles.input}
-                placeholder="yourname@humanstories.app"
-                placeholderTextColor={Theme.colors.inkSubtle}
-                keyboardType="email-address"
-                autoCapitalize="none"
-                value={email}
-                onChangeText={setEmail}
-              />
-            </View>
+      <Header>
+        <Label> Account Recovery</Label>
+        <Title>Lost the Key?</Title>
+        <Subtitle>
+          Enter the email associated with your pen name. We will send a
+          unique recovery link to your inbox.
+        </Subtitle>
+      </Header>
 
-            <TouchableOpacity 
-              style={styles.primaryButton} 
-              activeOpacity={0.9}
-              onPress={() => setIsSent(true)}
-            >
-              <Text style={styles.buttonText}>SEND RECOVERY LINK</Text>
-            </TouchableOpacity>
-          </View>
-        ) : (
-          <View style={styles.successState}>
-            <View style={styles.goldDivider} />
-            <Text style={styles.successText}>
-              A recovery link has been dispatched to <Text style={{color: Theme.colors.ink}}>{email}</Text>. 
-              Please check your spam folder if it does not arrive within minutes.
-            </Text>
-            <TouchableOpacity onPress={() => setIsSent(false)}>
-              <Text style={styles.resendText}>DIDN'T RECEIVE IT? TRY AGAIN</Text>
-            </TouchableOpacity>
-          </View>
-        )}
-
-      </View>
-
-      <View style={styles.footer}>
-        <Text style={styles.footerHelp}>NEED ASSISTANCE? SUPPORT@HUMANSTORIES.APP</Text>
-      </View>
-    </KeyboardAvoidingView>
+      <Form>
+        <Input
+          label='RECOVERY EMAIL'
+          placeholder="yourname@humanstories.app"
+          keyboardType="email-address"
+          autoCapitalize="none"
+          value={email}
+          onChangeText={setEmail}
+        />
+        <Button>SEND RECOVERY LINK</Button>
+        <Divider>OR</Divider>
+        <BrandFooter >NEED ASSISTANCE?{"\n"}SUPPORT@HUMANSTORIES.APP</BrandFooter>
+      </Form>
+    </KeyboardWrapper>
   );
 }
 
@@ -110,7 +87,7 @@ const styles = StyleSheet.create({
     fontFamily: Theme.fonts.mono,
     fontSize: 10,
     letterSpacing: 3,
-    color: Theme.colors.accentGold, // Using Gold for recovery states
+    color: Theme.colors.accentGold,
     textTransform: 'uppercase',
     marginBottom: 12,
   },

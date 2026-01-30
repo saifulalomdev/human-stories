@@ -1,9 +1,9 @@
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, StyleProp, ViewStyle } from 'react-native'
 import React from 'react'
 
-export default function Header({ children }: { children: React.ReactNode }) {
+export default function Header({ children, style }: { children: React.ReactNode, style?: StyleProp<ViewStyle> }) {
     return (
-        <View style={styles.header}>
+        <View style={[styles.header, style]}>
             {children}
         </View>
     )
