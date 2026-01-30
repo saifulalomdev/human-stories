@@ -13,6 +13,8 @@ import Subtitle from '@/components/ui/subtitle';
 import Title from '@/components/ui/title';
 import Label from '@/components/ui/label';
 import Header from '@/components/ui/header';
+import Divider from '@/components/ui/divider';
+import Form from '@/components/ui/form';
 
 export default function SignupScreen() {
   const [email, setEmail] = useState('');
@@ -30,15 +32,12 @@ export default function SignupScreen() {
       </Header>
 
       {/* Form Fields */}
-      <View style={styles.form}>
+      <Form>
         <Input
           label='FULL NAME'
           placeholder="you@example.com"
           keyboardType="email-address"
           autoCapitalize="none"
-          value={name}
-          onChangeText={setName}
-          error='somethin web gone'
         />
 
         <Input
@@ -46,8 +45,6 @@ export default function SignupScreen() {
           placeholder="you@example.com"
           keyboardType="email-address"
           autoCapitalize="none"
-          value={email}
-          onChangeText={setEmail}
         />
         <Input
           label='PASSWORD'
@@ -57,15 +54,10 @@ export default function SignupScreen() {
 
         <LegalAgreement />
         <Button>CREATE ACCOUNT</Button>
+        <Divider>OR</Divider>
         <AuthRedirect prompt='Already a part of HumanStories?' linkText='Sign In' href="/signin" />
-      </View>
+      </Form>
       <BrandFooter>HUMANSTORIES.APP</BrandFooter>
     </KeyboardWrapper>
   );
 }
-
-const styles = StyleSheet.create({
-  form: {
-    gap: 25,
-  },
-});

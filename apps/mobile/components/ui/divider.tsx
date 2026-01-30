@@ -28,5 +28,6 @@ const styles = StyleSheet.create({
         fontSize: 10,
         marginHorizontal: 15,
         color: Theme.colors.inkSubtle,
+        textTransform: "uppercase"
     },
 })

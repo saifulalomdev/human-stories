@@ -8,7 +8,7 @@ export default function ({ prompt, linkText, href }: { prompt: string, linkText:
             <TouchableOpacity style={styles.secondaryAction}>
                 <Text style={styles.secondaryText}>
                     {prompt}{' '}
-                    <Text style={{ color: Theme.colors.accent }}>
+                    <Text style={styles.link}>
                         {linkText}
                     </Text>
                 </Text>
@@ -27,4 +27,8 @@ const styles = StyleSheet.create({
         fontSize: 11,
         color: Theme.colors.inkFaded,
     },
+    link: {
+        fontWeight: "700",
+        color: Theme.colors.accent
+    }
 })

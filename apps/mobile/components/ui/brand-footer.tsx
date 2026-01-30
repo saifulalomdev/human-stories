@@ -1,10 +1,10 @@
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, StyleProp, ViewStyle } from 'react-native'
 import { Theme } from '@/constants/theme'
 import React from 'react'
 
-export default function BrandFooter({ children }: { children: React.ReactNode }) {
+export default function BrandFooter({ children , style}: { children: React.ReactNode, style?: StyleProp<ViewStyle> }) {
     return (
-        <View style={styles.footer}>
+        <View style={[styles.footer, style]}>
             <Text style={styles.footerBrand}>{children}</Text>
         </View>
     )
@@ -20,5 +20,6 @@ const styles = StyleSheet.create({
         fontSize: 9,
         letterSpacing: 3,
         color: Theme.colors.border,
+        textAlign: "center"
     }
 })
